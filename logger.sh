@@ -36,7 +36,8 @@ RAM_USED=$(free -m | sed '1,1d' | sed '2,2d' | tr -s ' ' | cut -d ' ' -f 3)
 
 # Here we get ourselves some percentages
 # NEED TO FIND A WAY TO DO DECIMAL MATH IN BASH
-
+RAM_USE=$(awk "BEGIN {print $RAM_USED/$RAM_TOTAL}")
+RAM_PERCENTAGE=$(awk "BEGIN {print $RAM_USE*100}")
 
 
 #Output for devtesting
@@ -51,4 +52,4 @@ echo "   CORE 3: ${CPU_3_UTILIZATION}%"
 echo ""
 echo "RAM TOTAL: ${RAM_TOTAL}MiB"
 echo "RAM USED: ${RAM_USED}MiB"
-echo "RAM USAGE: ${RAM_USE_PERCENTAGE}%"
+echo "RAM USAGE: ${RAM_PERCENTAGE}%"
