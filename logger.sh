@@ -17,6 +17,10 @@ STATS_DATABASE_PASSWORD=""
 CPU_READING=$(cat /sys/class/thermal/thermal_zone0/temp)
 
 
+# Bring CPU temp reading to human-expected format/Celcius
+CPU_TEMP=$((CPU_READING/1000))
+
+
 # CPU Util numbers need to be split up per core/all
 # We use mpstat from sysstat with no decimals (because int is nicer than float) to get the numbers for all cores
 # sed away the lines we don't need and remove duplicate spaces to make the idle field cuttable
@@ -35,10 +39,6 @@ CPU_0_UTILIZATION=$((100-$CPU_0_IDLE))
 CPU_1_UTILIZATION=$((100-$CPU_1_IDLE))
 CPU_2_UTILIZATION=$((100-$CPU_2_IDLE))
 CPU_3_UTILIZATION=$((100-$CPU_3_IDLE))
-
-
-#Then we make them sane to human eyes
-CPU_TEMP=$((CPU_READING/1000))
 
 
 # Here we use 'free' to get current RAM total and used, then calculate what the percentage used is
