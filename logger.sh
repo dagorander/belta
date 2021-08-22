@@ -10,6 +10,7 @@ CPU_READING=$(cat /sys/class/thermal/thermal_zone0/temp)
 # We use mpstat from sysstat with no decimals (because int is nicer than float) to get the numbers for all cores
 # sed away the lines we don't need and remove duplicate spaces to make the idle field cuttable
 # We are using idle because the utilization is broken up into many types of util
+# DANGER DANGER: Locale can add "PM" or "AM" to the timestamp, which throws off the cut at the end
 CPU_ALL_IDLE=$(mpstat -P all --dec=0 | sed '1,3d' | tr -s ' ' | cut -d ' ' -f 12)
 CPU_0_IDLE=$(mpstat -P 0 --dec=0 | sed '1,3d' | tr -s ' ' | cut -d ' ' -f 12)
 CPU_1_IDLE=$(mpstat -P 1 --dec=0 | sed '1,3d' | tr -s ' ' | cut -d ' ' -f 12)
