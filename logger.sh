@@ -3,6 +3,17 @@
 # sysstat: needed for mpstat
 
 
+# Store hostname
+HOST=$(cat /etc/hostname)
+
+
+# Later on, we need stuff here to grab database login details from a gitignored file
+STATS_DATABASE_ADDRESS=""
+STATS_DATABASE_USERNAME=""
+STATS_DATABASE_PASSWORD=""
+
+
+# Read raw CPU temp through catting the sensor (Ubuntu/RPI only, nonfunc in Arch/x86)
 CPU_READING=$(cat /sys/class/thermal/thermal_zone0/temp)
 
 
@@ -42,6 +53,9 @@ RAM_PERCENTAGE=$(awk "BEGIN {print $RAM_USE*100}")
 
 
 #Output for devtesting
+echo ""
+echo "STATS FOR HOST: ${HOST}"
+echo ""
 echo "CPU TEMP: ${CPU_TEMP}c"
 echo ""
 echo "CPU UTILIZATION:"
