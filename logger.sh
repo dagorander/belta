@@ -51,6 +51,10 @@ RAM_USE=$(awk "BEGIN {print $RAM_USED/$RAM_TOTAL}")
 RAM_PERCENTAGE=$(awk "BEGIN {print $RAM_USE*100}")
 
 
+# Now it is time to get free space on local storage (if that even matters in a docker image?)
+
+
+
 #Output for devtesting
 echo ""
 echo "STATS FOR HOST: ${HOST}"
