@@ -18,7 +18,7 @@ CPU_READING=$(cat /sys/class/thermal/thermal_zone0/temp)
 
 
 # Bring CPU temp reading to human-expected format/Celcius
-CPU_TEMP=$((CPU_READING/1000))
+CPU_TEMP=$(($CPU_READING/1000))
 
 
 # CPU Util numbers need to be split up per core/all
@@ -41,18 +41,16 @@ CPU_2_UTILIZATION=$((100-$CPU_2_IDLE))
 CPU_3_UTILIZATION=$((100-$CPU_3_IDLE))
 
 
-# Here we use 'free' to get current RAM total and used, then calculate what the percentage used is
+# Here we use 'free' to get current RAM total and used
 RAM_TOTAL=$(free -m | sed '1,1d' | sed '2,2d' | tr -s ' ' | cut -d ' ' -f 2)
 RAM_USED=$(free -m | sed '1,1d' | sed '2,2d' | tr -s ' ' | cut -d ' ' -f 3)
 
 
-# Here we get ourselves some percentages
+# Here we get ourselves some percentages for RAM usage
 RAM_USE=$(awk "BEGIN {print $RAM_USED/$RAM_TOTAL}")
 RAM_PERCENTAGE=$(awk "BEGIN {print $RAM_USE*100}")
-
-
-# Now it is time to get free space on local storage (if that even matters in a docker image?)
-
+RAM_HACKED_PERCENTAGE=$(awk "BEGIN {print $RAM_PERCENTAGE+0.5}")
+RAM_INT_PERCENTAGE=$(echo "$RAM_HACKED_PERCENTAGE" | cut -d '.' -f 1)
 
 
 #Output for devtesting
@@ -71,3 +69,4 @@ echo ""
 echo "RAM TOTAL: ${RAM_TOTAL}MiB"
 echo "RAM USED: ${RAM_USED}MiB"
 echo "RAM USAGE: ${RAM_PERCENTAGE}%"
+echo "RAM USAGE: ${RAM_INT_PERCENTAGE}%"
