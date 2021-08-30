@@ -42,8 +42,8 @@ CPU_3_UTILIZATION=$((100-$CPU_3_IDLE))
 
 
 # Here we use 'free' to get current RAM total and used
-RAM_TOTAL=$(free -m | sed '1,1d' | sed '2,2d' | tr -s ' ' | cut -d ' ' -f 2)
-RAM_USED=$(free -m | sed '1,1d' | sed '2,2d' | tr -s ' ' | cut -d ' ' -f 3)
+RAM_TOTAL=$(free -m | sed -n '2,2p' | tr -s ' ' | cut -d ' ' -f 2)
+RAM_USED=$(free -m | sed -n '2,2p' | tr -s ' ' | cut -d ' ' -f 3)
 
 
 # Here we get ourselves some percentages for RAM usage
